@@ -39,7 +39,7 @@ public class YPImagePicker: UINavigationController {
     }
 
     public var didSelectImage: ((UIImage) -> Void)?
-    public var didSelectVideo: ((Data, UIImage) -> Void)?
+    public var didSelectVideo: ((URL, UIImage) -> Void)?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -87,17 +87,13 @@ public class YPImagePicker: UINavigationController {
                 exportSession?.exportAsynchronously {
                     switch exportSession!.status {
                     case .completed:
-                        if let videoData = FileManager.default.contents(atPath: uploadURL.path) {
-                            DispatchQueue.main.async {
-                                self.didSelectVideo?(videoData, thumb)
-                            }
+                        DispatchQueue.main.async {
+                            self.didSelectVideo?(uploadURL, thumb)
                         }
                     default:
                         // Fall back to default video size:
-                        if let videoData = FileManager.default.contents(atPath: videoURL.path) {
-                            DispatchQueue.main.async {
-                                self.didSelectVideo?(videoData, thumb)
-                            }
+                        DispatchQueue.main.async {
+                            self.didSelectVideo?(uploadURL, thumb)
                         }
                     }
                 }
