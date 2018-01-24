@@ -39,7 +39,7 @@ public class YPImagePicker: UINavigationController {
     }
 
     public var didSelectImage: ((UIImage) -> Void)?
-    public var didSelectVideo: ((Data, UIImage) -> Void)?
+    public var didSelectVideo: ((URL, UIImage) -> Void)?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -76,28 +76,24 @@ public class YPImagePicker: UINavigationController {
             // Compress Video to 640x480 format.
             let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
             if let firstPath = paths.first {
-                let path = firstPath + "/\(Int(Date().timeIntervalSince1970))temporary.mov"
+                let path = firstPath + "/\(Int(Date().timeIntervalSince1970))temporary.mp4"
                 let uploadURL = URL(fileURLWithPath: path)
                 let asset = AVURLAsset(url: videoURL)
                 
                 let exportSession = AVAssetExportSession(asset: asset, presetName: self.configuration.videoCompression)
                 exportSession?.outputURL = uploadURL
-                exportSession?.outputFileType = AVFileType.mov
+                exportSession?.outputFileType = AVFileType.mp4
                 exportSession?.shouldOptimizeForNetworkUse = true //USEFUL?
                 exportSession?.exportAsynchronously {
                     switch exportSession!.status {
                     case .completed:
-                        if let videoData = FileManager.default.contents(atPath: uploadURL.path) {
-                            DispatchQueue.main.async {
-                                self.didSelectVideo?(videoData, thumb)
-                            }
+                        DispatchQueue.main.async {
+                            self.didSelectVideo?(uploadURL, thumb)
                         }
                     default:
                         // Fall back to default video size:
-                        if let videoData = FileManager.default.contents(atPath: videoURL.path) {
-                            DispatchQueue.main.async {
-                                self.didSelectVideo?(videoData, thumb)
-                            }
+                        DispatchQueue.main.async {
+                            self.didSelectVideo?(uploadURL, thumb)
                         }
                     }
                 }
