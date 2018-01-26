@@ -19,7 +19,7 @@ public class YPImagePicker: UINavigationController {
     private static var defaultConfiguration = YPImagePickerConfiguration()
     
     private let configuration: YPImagePickerConfiguration!
-    private let picker: PickerVC!
+    private let picker: YPPickerVC!
     
     /// Get a YPImagePicker instance with the default configuration.
     public convenience init() {
@@ -30,7 +30,7 @@ public class YPImagePicker: UINavigationController {
     /// Get a YPImagePicker with the specified configuration.
     public required init(configuration: YPImagePickerConfiguration) {
         self.configuration = configuration
-        picker = PickerVC(configuration: configuration)
+        picker = YPPickerVC(configuration: configuration)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -47,11 +47,11 @@ public class YPImagePicker: UINavigationController {
         navigationBar.isTranslucent = false
         picker.didSelectImage = { [unowned self] pickedImage, isNewPhoto in
             if self.configuration.showsFilters {
-                let filterVC = FiltersVC(image: pickedImage)
+                let filterVC = YPFiltersVC(image: pickedImage)
                 filterVC.didSelectImage = { filteredImage, isImageFiltered in
                     self.didSelectImage?(filteredImage)
                     if (isNewPhoto || isImageFiltered) && self.configuration.shouldSaveNewPicturesToAlbum {
-                        PhotoSaver.trySaveImage(filteredImage, inAlbumNamed: self.configuration.albumName)
+                        YPPhotoSaver.trySaveImage(filteredImage, inAlbumNamed: self.configuration.albumName)
                     }
                 }
                 
@@ -66,7 +66,7 @@ public class YPImagePicker: UINavigationController {
             } else {
                 self.didSelectImage?(pickedImage)
                 if isNewPhoto && self.configuration.shouldSaveNewPicturesToAlbum {
-                    PhotoSaver.trySaveImage(pickedImage, inAlbumNamed: self.configuration.albumName)
+                    YPPhotoSaver.trySaveImage(pickedImage, inAlbumNamed: self.configuration.albumName)
                 }
             }
         }
