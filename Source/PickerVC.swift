@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 import Stevia
 
 var flashOffImage: UIImage?
@@ -25,6 +26,8 @@ extension UIColor {
 }
 
 public class PickerVC: FSBottomPager, PagerDelegate {
+    
+    private let locManager = LocationManager()
     
     private let albumVC: FSAlbumVC
     
@@ -47,8 +50,8 @@ public class PickerVC: FSBottomPager, PagerDelegate {
     }
     
     public var didClose:(() -> Void)?
-    public var didSelectImage: ((UIImage, Bool) -> Void)?
-    public var didSelectVideo: ((URL) -> Void)?
+    public var didSelectImage: ((UIImage, Bool, CLLocation?) -> Void)?
+    public var didSelectVideo: ((URL, CLLocation?) -> Void)?
     
     enum Mode {
         case library
@@ -80,10 +83,16 @@ public class PickerVC: FSBottomPager, PagerDelegate {
         
         view.backgroundColor = UIColor(r: 247, g: 247, b: 247)
         cameraVC.didCapturePhoto = { [unowned self] img in
-            self.didSelectImage?(img, true)
+            self.locManager.location(with: { (loc) in
+                self.didSelectImage?(img, true, loc)
+            })
+            
         }
+        // TODO adding metadata(location) to video
         videoVC.didCaptureVideo = { [unowned self] videoURL in
-            self.didSelectVideo?(videoURL)
+            self.locManager.location(with: { (loc) in
+                self.didSelectVideo?(videoURL, loc)
+            })
         }
         delegate = self
         
@@ -270,10 +279,10 @@ public class PickerVC: FSBottomPager, PagerDelegate {
     func done() {
         if mode == .library {
             albumVC.doAfterPermissionCheck { [weak self] in
-                self?.albumVC.selectedMedia(photo: { img in
-                    self?.didSelectImage?(img, false)
-                }, video: { videoURL in
-                    self?.didSelectVideo?(videoURL)
+                self?.albumVC.selectedMedia(photo: { img, location in
+                    self?.didSelectImage?(img, false, location)
+                }, video: { videoURL, location in
+                    self?.didSelectVideo?(videoURL, location)
                 })
             }
         }

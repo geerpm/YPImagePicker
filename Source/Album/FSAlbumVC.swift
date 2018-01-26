@@ -648,8 +648,8 @@ PHPhotoLibraryChangeObserver, UIGestureRecognizerDelegate, UICollectionViewDeleg
         return assets
     }
     
-    public func selectedMedia(photo:@escaping (_ photo: UIImage) -> Void,
-                              video: @escaping (_ videoURL: URL) -> Void) {
+    public func selectedMedia(photo:@escaping (_ photo: UIImage, _ location: CLLocation?) -> Void,
+                              video: @escaping (_ videoURL: URL, _ location: CLLocation?) -> Void) {
         
         // Get crop rect if cropped to square
         var cropRect = CGRect.zero
@@ -676,11 +676,11 @@ PHPhotoLibraryChangeObserver, UIGestureRecognizerDelegate, UICollectionViewDeleg
                     videosOptions.isNetworkAccessAllowed = true
                     self.delegate?.albumViewStartedLoadingImage()
                     self.imageManager?.requestAVAsset(forVideo: asset,
-                                                      options: videosOptions) { v, _, _ in
+                                                      options: videosOptions) { [unowned asset] v, _, _ in
                                                         if let urlAsset = v as? AVURLAsset {
                                                             DispatchQueue.main.async {
                                                                 self.delegate?.albumViewFinishedLoadingImage()
-                                                                video(urlAsset.url)
+                                                                video(urlAsset.url, asset.location)
                                                             }
                                                         }
                     }
@@ -713,10 +713,10 @@ PHPhotoLibraryChangeObserver, UIGestureRecognizerDelegate, UICollectionViewDeleg
                     .requestImage(for: asset,
                                   targetSize: targetSize,
                                   contentMode: .aspectFit,
-                                  options: options) { result, _ in
+                                  options: options) { [unowned asset] result, _ in
                                     DispatchQueue.main.async {
                                         self.delegate?.albumViewFinishedLoadingImage()
-                                        photo(result!)
+                                        photo(result!, asset.location)
                                     }
                 }
             case .audio, .unknown:

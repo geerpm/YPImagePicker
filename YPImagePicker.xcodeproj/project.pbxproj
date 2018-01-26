@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		71A7F21A201AFCD2005836FE /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7F219201AFCD2005836FE /* LocationManager.swift */; };
 		99A0529A1F20A19B005600B3 /* YPAlbumFolderSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A052991F20A19B005600B3 /* YPAlbumFolderSelectionVC.swift */; };
 		99A0529D1F20B45D005600B3 /* YPAlbumFolderSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0529C1F20B45D005600B3 /* YPAlbumFolderSelectionView.swift */; };
 		99A0529F1F20B480005600B3 /* YPAlbumFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0529E1F20B480005600B3 /* YPAlbumFolderCell.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		52412A931CA6114A0073C4BE /* YPImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YPImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71A7F219201AFCD2005836FE /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		99A052991F20A19B005600B3 /* YPAlbumFolderSelectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YPAlbumFolderSelectionVC.swift; sourceTree = "<group>"; };
 		99A0529C1F20B45D005600B3 /* YPAlbumFolderSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YPAlbumFolderSelectionView.swift; sourceTree = "<group>"; };
 		99A0529E1F20B480005600B3 /* YPAlbumFolderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YPAlbumFolderCell.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				99C6D6B01F1FB5C100711DB2 /* FSConfiguration.swift */,
 				99C6D6B11F1FB5C100711DB2 /* FSHelpers.swift */,
 				99C6D6B41F1FB5C100711DB2 /* PhotoSaver.swift */,
+				71A7F219201AFCD2005836FE /* LocationManager.swift */,
 				99C6D69E1F1FB5C100711DB2 /* Album */,
 				99C6D6A61F1FB5C100711DB2 /* Camera */,
 				99C6D6A91F1FB5C100711DB2 /* Filters */,
@@ -319,6 +322,7 @@
 				99C6D6C61F1FB5C100711DB2 /* FilterPreview.swift in Sources */,
 				99C6D6C01F1FB5C100711DB2 /* FSImageCropView.swift in Sources */,
 				99A052A11F20B49B005600B3 /* Album.swift in Sources */,
+				71A7F21A201AFCD2005836FE /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
 public class YPImagePicker: UINavigationController {
     
@@ -38,20 +39,20 @@ public class YPImagePicker: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public var didSelectImage: ((UIImage) -> Void)?
-    public var didSelectVideo: ((URL, UIImage) -> Void)?
+    public var didSelectImage: ((UIImage, CLLocation?) -> Void)?
+    public var didSelectVideo: ((URL, UIImage, CLLocation?) -> Void)?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         viewControllers = [picker]
         navigationBar.isTranslucent = false
-        picker.didSelectImage = { [unowned self] pickedImage, isNewPhoto in
+        picker.didSelectImage = { [unowned self] pickedImage, isNewPhoto, location in
             if self.configuration.showsFilters {
                 let filterVC = FiltersVC(image: pickedImage)
                 filterVC.didSelectImage = { filteredImage, isImageFiltered in
-                    self.didSelectImage?(filteredImage)
+                    self.didSelectImage?(filteredImage, location)
                     if (isNewPhoto || isImageFiltered) && self.configuration.shouldSaveNewPicturesToAlbum {
-                        PhotoSaver.trySaveImage(filteredImage, inAlbumNamed: self.configuration.albumName)
+                        PhotoSaver.trySaveImage(filteredImage, inAlbumNamed: self.configuration.albumName, location: location)
                     }
                 }
                 
@@ -64,14 +65,14 @@ public class YPImagePicker: UINavigationController {
                 
                 self.pushViewController(filterVC, animated: false)
             } else {
-                self.didSelectImage?(pickedImage)
+                self.didSelectImage?(pickedImage, location)
                 if isNewPhoto && self.configuration.shouldSaveNewPicturesToAlbum {
-                    PhotoSaver.trySaveImage(pickedImage, inAlbumNamed: self.configuration.albumName)
+                    PhotoSaver.trySaveImage(pickedImage, inAlbumNamed: self.configuration.albumName, location: location)
                 }
             }
         }
         
-        picker.didSelectVideo = { [unowned self] videoURL in
+        picker.didSelectVideo = { [unowned self] videoURL, location in
             let thumb = thunbmailFromVideoPath(videoURL)
             // Compress Video to 640x480 format.
             let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
@@ -88,12 +89,12 @@ public class YPImagePicker: UINavigationController {
                     switch exportSession!.status {
                     case .completed:
                         DispatchQueue.main.async {
-                            self.didSelectVideo?(uploadURL, thumb)
+                            self.didSelectVideo?(uploadURL, thumb, location)
                         }
                     default:
                         // Fall back to default video size:
                         DispatchQueue.main.async {
-                            self.didSelectVideo?(uploadURL, thumb)
+                            self.didSelectVideo?(uploadURL, thumb, location)
                         }
                     }
                 }
