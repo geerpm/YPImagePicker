@@ -7,29 +7,14 @@ It comes with adjustable square crop and filters.
 [![Platform](https://img.shields.io/cocoapods/p/Fusuma.svg?style=flat)](http://cocoapods.org/pods/Fusuma)
 [![CI Status](http://img.shields.io/travis/ytakzk/Fusuma.svg?style=flat)](https://travis-ci.org/ytakzk/Fusuma)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![codebeat badge](https://codebeat.co/badges/6a591267-c444-4c88-a410-56270d8ed9bc)](https://codebeat.co/projects/github-com-yummypets-ypfusuma)
+[![codebeat badge](https://codebeat.co/badges/9710a89d-b1e2-4e55-a4a2-3ae1f98f4c53)](https://codebeat.co/projects/github-com-yummypets-ypimagepicker-master)
 [![GitHub tag](https://img.shields.io/github/release/Yummypets/YPImagePicker.svg)]()
 
-Give it a quick try :  
-`pod try YPImagePicker`
+Give it a quick try : `pod try YPImagePicker`
 
-|         | Features  |
-----------|-----------------
-🌅        | Library
-📷        | Photo
-🎥        | Video
-✂️        | Crop
-⚡️        | Flash
-🖼        | Filters
+🌅 Library - 📷 Photo - 🎥 Video - ✂️ Crop - ⚡️ Flash - 🖼 Filters
 
-
-## Preview
-
-<img src="https://raw.githubusercontent.com/Yummypets/YPImagePicker/master/Images/library.PNG" width="340px">
-<img src="https://raw.githubusercontent.com/Yummypets/YPImagePicker/master/Images/photo.PNG" width="340px">
-<img src="https://raw.githubusercontent.com/Yummypets/YPImagePicker/master/Images/video.PNG" width="340px">
-<img src="https://raw.githubusercontent.com/Yummypets/YPImagePicker/master/Images/filters.PNG" width="340px">
-
+<img src="https://raw.githubusercontent.com/Yummypets/YPImagePicker/master/Images/library.PNG" width="200px" > <img src="https://raw.githubusercontent.com/Yummypets/YPImagePicker/master/Images/photo.PNG" width="200px" > <img src="https://raw.githubusercontent.com/Yummypets/YPImagePicker/master/Images/video.PNG" width="200px" > <img src="https://raw.githubusercontent.com/Yummypets/YPImagePicker/master/Images/filters.PNG" width="200px" >
 
 Those features are available just with a few lines of code!
 
@@ -37,15 +22,24 @@ Those features are available just with a few lines of code!
 YPImagePicker was built from the great Fusuma library.
 
 Here are the improvements we added :
+
+- Albums
+- Filters
+- Videos in the library
+- Both Square and non-square images
+- Permission managenent
+- Pan between tabs which feels smoother
 - Improve Overall Code Quality
 - Simplify API
-- Added Filters View ala Instagram
 - Replaces icons with lighter Text
 - Preselect Front camera (e.g for avatars)
-- Scroll between tabs which feels smoother
-- Grab videos form the library view as well
 - Replaces Delegate based with callbacks based api
 - Uses Native Navigation bar over custom View (gotta be a good UIKit citizen)
+- Faster library load
+- Hidden status bar for a more immersive XP
+- Flash Auto mode
+- Video Torch Mode
+- iPhone X support
 
 ## Installation
 
@@ -102,6 +96,8 @@ config.shouldSaveNewPicturesToAlbum = true
 config.videoCompression = AVAssetExportPresetHighestQuality
 config.albumName = "MyGreatAppName"
 config.startOnScreen = .library
+config.videoRecordingTimeLimit = 10
+config.videoFromLibraryTimeLimit = 20
 
 // Build a picker with your configuration
 let picker = YPImagePicker(configuration: config)
@@ -152,4 +148,4 @@ See LICENSE for details.
 
 ## Swift Version
 Swift 3 -> version **1.2.1**  
-Swift 4 -> version **2.4.2**
+Swift 4 -> version **2.5.0**

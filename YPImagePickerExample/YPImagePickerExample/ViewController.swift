@@ -47,6 +47,9 @@ class ViewController: UIViewController {
         config.videoCompression = AVAssetExportPresetHighestQuality
         config.albumName = "MyGreatAppName"
         config.startOnScreen = .library
+//        config.videoRecordingTimeLimit = 10
+//        config.videoFromLibraryTimeLimit = 10
+        
         // Set it the default conf for all Pickers
         //      YPImagePicker.setDefaultConfiguration(config)
         // And then use the default configuration like so:
@@ -56,15 +59,19 @@ class ViewController: UIViewController {
         let picker = YPImagePicker(configuration: config)
         
         // unowned is Mandatory since it would create a retain cycle otherwise :)
-        picker.didSelectImage = { [unowned picker] img in
+        picker.didSelectImage = { [unowned picker] img, location in
             // image picked
             print(img.size)
+            print("image.........")
+            dump(location)
             self.imageView.image = img
             picker.dismiss(animated: true, completion: nil)
         }
-        picker.didSelectVideo = { [unowned picker] videoData, videoThumbnailImage in
+        picker.didSelectVideo = { [unowned picker] videoData, videoThumbnailImage, location in
             // video picked
+            print("video.........")
             self.imageView.image = videoThumbnailImage
+            dump(location)
             picker.dismiss(animated: true, completion: nil)
         }
         present(picker, animated: true, completion: nil)

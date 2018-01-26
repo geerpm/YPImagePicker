@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
 public class YPImagePicker: UINavigationController {
     
@@ -19,7 +20,7 @@ public class YPImagePicker: UINavigationController {
     private static var defaultConfiguration = YPImagePickerConfiguration()
     
     private let configuration: YPImagePickerConfiguration!
-    private let picker: PickerVC!
+    private let picker: YPPickerVC!
     
     /// Get a YPImagePicker instance with the default configuration.
     public convenience init() {
@@ -30,7 +31,7 @@ public class YPImagePicker: UINavigationController {
     /// Get a YPImagePicker with the specified configuration.
     public required init(configuration: YPImagePickerConfiguration) {
         self.configuration = configuration
-        picker = PickerVC(configuration: configuration)
+        picker = YPPickerVC(configuration: configuration)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,20 +39,20 @@ public class YPImagePicker: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public var didSelectImage: ((UIImage) -> Void)?
-    public var didSelectVideo: ((URL, UIImage) -> Void)?
+    public var didSelectImage: ((UIImage, CLLocation?) -> Void)?
+    public var didSelectVideo: ((URL, UIImage, CLLocation?) -> Void)?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         viewControllers = [picker]
         navigationBar.isTranslucent = false
-        picker.didSelectImage = { [unowned self] pickedImage, isNewPhoto in
+        picker.didSelectImage = { [unowned self] pickedImage, isNewPhoto, location in
             if self.configuration.showsFilters {
-                let filterVC = FiltersVC(image: pickedImage)
+                let filterVC = YPFiltersVC(image: pickedImage)
                 filterVC.didSelectImage = { filteredImage, isImageFiltered in
-                    self.didSelectImage?(filteredImage)
+                    self.didSelectImage?(filteredImage, location)
                     if (isNewPhoto || isImageFiltered) && self.configuration.shouldSaveNewPicturesToAlbum {
-                        PhotoSaver.trySaveImage(filteredImage, inAlbumNamed: self.configuration.albumName)
+                        YPPhotoSaver.trySaveImage(filteredImage, inAlbumNamed: self.configuration.albumName, location: location)
                     }
                 }
                 
@@ -64,14 +65,14 @@ public class YPImagePicker: UINavigationController {
                 
                 self.pushViewController(filterVC, animated: false)
             } else {
-                self.didSelectImage?(pickedImage)
+                self.didSelectImage?(pickedImage, location)
                 if isNewPhoto && self.configuration.shouldSaveNewPicturesToAlbum {
-                    PhotoSaver.trySaveImage(pickedImage, inAlbumNamed: self.configuration.albumName)
+                    YPPhotoSaver.trySaveImage(pickedImage, inAlbumNamed: self.configuration.albumName, location: location)
                 }
             }
         }
         
-        picker.didSelectVideo = { [unowned self] videoURL in
+        picker.didSelectVideo = { [unowned self] videoURL, location in
             let thumb = thunbmailFromVideoPath(videoURL)
             // Compress Video to 640x480 format.
             let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
@@ -88,12 +89,12 @@ public class YPImagePicker: UINavigationController {
                     switch exportSession!.status {
                     case .completed:
                         DispatchQueue.main.async {
-                            self.didSelectVideo?(uploadURL, thumb)
+                            self.didSelectVideo?(uploadURL, thumb, location)
                         }
                     default:
                         // Fall back to default video size:
                         DispatchQueue.main.async {
-                            self.didSelectVideo?(uploadURL, thumb)
+                            self.didSelectVideo?(uploadURL, thumb, location)
                         }
                     }
                 }
