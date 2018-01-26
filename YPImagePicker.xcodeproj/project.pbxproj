@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		71A7F21F201B1CF1005836FE /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7F21E201B1CF1005836FE /* LocationManager.swift */; };
+		71A7F21F201B1CF1005836FE /* YPLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7F21E201B1CF1005836FE /* YPLocationManager.swift */; };
 		99019E4C2018CCD6007325C2 /* YPBottomPagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99019E4B2018CCD6007325C2 /* YPBottomPagerView.swift */; };
 		99019E4E2018CD31007325C2 /* YPPagerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99019E4D2018CD31007325C2 /* YPPagerMenu.swift */; };
 		99019E512018CDED007325C2 /* YPLibraryImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99019E502018CDED007325C2 /* YPLibraryImageSize.swift */; };
@@ -47,7 +47,7 @@
 
 /* Begin PBXFileReference section */
 		52412A931CA6114A0073C4BE /* YPImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YPImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		71A7F21E201B1CF1005836FE /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		71A7F21E201B1CF1005836FE /* YPLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YPLocationManager.swift; sourceTree = "<group>"; };
 		99019E4B2018CCD6007325C2 /* YPBottomPagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPBottomPagerView.swift; sourceTree = "<group>"; };
 		99019E4D2018CD31007325C2 /* YPPagerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPPagerMenu.swift; sourceTree = "<group>"; };
 		99019E502018CDED007325C2 /* YPLibraryImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPLibraryImageSize.swift; sourceTree = "<group>"; };
@@ -143,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				99C6D6B11F1FB5C100711DB2 /* YPHelpers.swift */,
+				71A7F21E201B1CF1005836FE /* YPLocationManager.swift */,
 				99C6D6B41F1FB5C100711DB2 /* YPPhotoSaver.swift */,
 				990FD28E201A49D3002A39A1 /* PermissionCheckable.swift */,
 			);
@@ -177,7 +178,6 @@
 				99C6D6B21F1FB5C100711DB2 /* YPImagePickerHeader.h */,
 				99C6D6B81F1FB5C100711DB2 /* YPImagePicker.swift */,
 				99C6D6B51F1FB5C100711DB2 /* YPPickerVC.swift */,
-				71A7F21E201B1CF1005836FE /* LocationManager.swift */,
 				99019E4F2018CDDF007325C2 /* Configuration */,
 				99019E4A2018CCB8007325C2 /* BottomPager */,
 				99C6D69E1F1FB5C100711DB2 /* Library */,
@@ -339,7 +339,7 @@
 				990FD28F201A49D3002A39A1 /* PermissionCheckable.swift in Sources */,
 				99C6D6C71F1FB5C100711DB2 /* YPFiltersVC.swift in Sources */,
 				99D1DC2B1F9788930047F0E0 /* YPImagePickerConfiguration.swift in Sources */,
-				71A7F21F201B1CF1005836FE /* LocationManager.swift in Sources */,
+				71A7F21F201B1CF1005836FE /* YPLocationManager.swift in Sources */,
 				99C6D6C51F1FB5C100711DB2 /* YPFilterCollectionViewCell.swift in Sources */,
 				99C6D6C11F1FB5C100711DB2 /* YPImageCropViewContainer.swift in Sources */,
 				99C6D6D11F1FB5C100711DB2 /* YPImagePicker.swift in Sources */,

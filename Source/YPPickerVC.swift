@@ -24,7 +24,7 @@ extension UIColor {
 
 public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     
-    private let locManager = LocationManager()
+    private let locManager = YPLocationManager()
     
     private let albumVC: YPLibraryVC
     
