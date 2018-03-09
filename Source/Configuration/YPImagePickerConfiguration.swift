@@ -3,7 +3,7 @@
 //  YPImagePicker
 //
 //  Created by Sacha DSO on 18/10/2017.
-//  Copyright © 2017 ytakzk. All rights reserved.
+//  Copyright © 2016 Yummypets. All rights reserved.
 //
 
 import Foundation
@@ -27,7 +27,11 @@ public struct YPImagePickerConfiguration {
     public var libraryTargetImageSize = YPLibraryImageSize.original
     
     /// Enables videos within the library and video taking. Defaults to false
+    @available(*, unavailable, renamed:"showsVideoInLibrary")
     public var showsVideo = false
+    
+    /// Enables videos within the library. Defaults to false
+    public var showsVideoInLibrary = false
     
     /// Enables selecting the front camera by default, useful for avatars. Defaults to false
     public var usesFrontCamera = false
@@ -50,6 +54,10 @@ public struct YPImagePickerConfiguration {
     /// Default value is `.photo`
     public var startOnScreen: YPPickerScreen = .photo
     
+    /// Defines which screens are shown at launch, and their order.
+    /// Default value is `[.library, .photo]`
+    public var screens: [YPPickerScreen] = [.library, .photo]
+    
     /// Defines the time limit for recording videos.
     /// Default is 30 seconds.
     public var videoRecordingTimeLimit: TimeInterval = 30.0
@@ -57,4 +65,7 @@ public struct YPImagePickerConfiguration {
     /// Defines the time limit for videos from the library.
     /// Defaults to 60 seconds.
     public var videoFromLibraryTimeLimit: TimeInterval = 60.0
+    
+    /// Adds a Crop step in the photo taking process, after filters.  Defaults to .none
+    public var showsCrop: YPCropType = .none
 }
